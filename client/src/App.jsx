@@ -7,6 +7,7 @@ import AddExperience from "./pages/AddExperience"
 import ExperienceList from "./pages/ExperienceList"
 import AddProject from "./pages/AddProject"
 import ProjectList from "./pages/ProjectList"
+import Messages from "./pages/Messages"
 // import Education from "./pages/Education"
 function App() {
   
@@ -25,6 +26,7 @@ function App() {
       <Route path="/project/add" element={<AddProject/>}/>
       <Route path="/project/list" element={<ProjectList/>}/>
       <Route path="/project/edit/:id" element={<AddProject/>}/>
+      <Route path="/messages/list" element={<Messages/>}/>
     </Routes>
     
     </BrowserRouter>

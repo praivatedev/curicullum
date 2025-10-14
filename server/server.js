@@ -27,11 +27,12 @@ runServer()
 const educationRoutes = require("./controllers/education")
 const experienceRoutes = require("./controllers/experience")
 const projectRoutes = require("./controllers/project")
-
+const messageRoutes = require("./controllers/messages")
 
 app.use("/api/education", educationRoutes);
 app.use("/api/experience", experienceRoutes);
 app.use("/api/project", projectRoutes)
+app.use("/api/message", messageRoutes)
 
 
 
