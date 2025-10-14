@@ -48,7 +48,7 @@ router.get("/:id", async (req, res) => {
         const eduacation = await Education.findById(req.params.id)
 
         if(!eduacation){
-            return res.status(404).json({message: "Error finding the education"})
+            return res.status(404).json({error: "Error finding the education"})
         }
 
         return res.status(200).json(eduacation)
@@ -74,7 +74,7 @@ router.put('/edit/:id', async (req, res) => {
 
          console.error({Error: error});
 
-        return res.status(500).json({ error: error.message})        
+        return res.status(500).json({ error: error.message}) 
     }
 });
 

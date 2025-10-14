@@ -55,8 +55,15 @@ const Navbar = () => {
                 </div>
                 {!isCollapsed && (
                     <ul className="ml-10 mt-2 space-y-1 text-gray-700">
-                        <li className="cursor-pointer hover:text-blue-600">Add Experience</li>
-                        <li className="cursor-pointer hover:text-blue-600">Experience List</li>
+
+                        <Link to="/experience/add">
+                        <li className="cursor-pointer hover:text-blue-600">Add Experience</li>                        
+                        </Link>
+
+                        <Link to="/experience/list"> 
+                        <li className="cursor-pointer hover:text-blue-600">Experience List</li>                        
+                        </Link>
+                        
                     </ul>
                 )}
             </div>
@@ -69,8 +76,16 @@ const Navbar = () => {
                 </div>
                 {!isCollapsed && (
                     <ul className="ml-10 mt-2 space-y-1 text-gray-700">
+
+                        <Link to="/project/add">
                         <li className="cursor-pointer hover:text-blue-600">Add Project</li>
-                        <li className="cursor-pointer hover:text-blue-600">Projects List</li>
+                        </Link>
+
+                        <Link to="/project/list">
+                         <li className="cursor-pointer hover:text-blue-600">Projects List</li>
+                        </Link>
+                        
+                       
                     </ul>
                 )}
             </div>

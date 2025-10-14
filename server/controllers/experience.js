@@ -28,7 +28,7 @@ router.get('/list', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const experience = await Experience.findOneById(id)
+        const experience = await Experience.findById(req.params.id)
 
         if(!experience){
             return res.status(404).json({message: "Error finding the experience!!"})
@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
     try {
-        const updatedExperience = await Experience.findOneByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        const updatedExperience = await Experience.findOneByIdAndUpdate({_id: req.params.id}, req.body, { new: true, runValidators: true })
 
         if(!updatedExperience){
             return res.status(404).json({Message: "Error finding the experience to update!!"})
