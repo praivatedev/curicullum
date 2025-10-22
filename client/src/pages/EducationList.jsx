@@ -9,6 +9,8 @@ const EducationList = () => {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
 
+    const BASE_URL = "https://curicullum.onrender.com/api"
+
     // Format date for display: "Jan 2024"
     const formatDate = (date) => {
         if (!date || date === "Present") return "Present";
@@ -19,7 +21,7 @@ const EducationList = () => {
     // Fetch all education entries from backend
     const fetchEducation = async () => {
         try {
-            const res = await axios.get("http://localhost:4050/api/education/list");
+            const res = await axios.get(`${BASE_URL}/education/list`);
             setEducationList(res.data);
         } catch (err) {
             console.error("Error fetching education:", err);
@@ -35,7 +37,7 @@ const EducationList = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this education entry?")) return;
         try {
-            const res = await axios.delete(`http://localhost:4050/api/education/delete/${id}`);
+            const res = await axios.delete(`${BASE_URL}/education/delete/${id}`);
 
             console.log(res)
 

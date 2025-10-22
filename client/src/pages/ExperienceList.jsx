@@ -10,11 +10,14 @@ const ExperienceList = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  const BASE_URL = "https://curicullum.onrender.com/api"
+
   // Fetch all experiences
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const res = await axios.get("http://localhost:4050/api/experience/list");
+        const res = await axios.get(`${BASE_URL}/experience/list`);
+        console.log(res.data)
         setExperiences(res.data.experiences || res.data);
         setSuccess("Experiences loaded successfully ✅");
       } catch (err) {
@@ -31,7 +34,7 @@ const ExperienceList = () => {
     if (!window.confirm("Are you sure you want to delete this experience?")) return;
 
     try {
-      await axios.delete(`http://localhost:4050/api/experience/delete/${id}`);
+      await axios.delete(`${BASE_URL}/experience/delete/${id}`);
       setExperiences((prev) => prev.filter((exp) => exp._id !== id));
       setSuccess("Experience deleted successfully ✅");
     } catch (err) {
@@ -104,12 +107,18 @@ const ExperienceList = () => {
                 <p className="text-blue-600 font-medium">{exp.position}</p>
                 <p className="text-gray-500 text-sm">{exp.location}</p>
                 <p className="mt-2 text-sm text-gray-600">
-                  {new Date(exp.startdate).toLocaleDateString()} -{" "}
-                  {exp.enddate === "Present" || !exp.enddate
+                  {new Date(exp.startDate).toLocaleString("en-US", {
+                    month: "long",
+                    year: "numeric",
+                  })}{" "}
+                  -{" "}
+                  {exp.endDate === "Present" || !exp.endDate
                     ? "Present"
-                    : new Date(exp.enddate).toLocaleDateString()}
+                    : new Date(exp.endDate).toLocaleString("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    })}
                 </p>
-
                 <div className="mt-3">
                   <h4 className="font-semibold text-gray-700">Technologies:</h4>
                   <ul className="list-disc list-inside text-sm text-gray-600">

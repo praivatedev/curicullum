@@ -17,6 +17,8 @@ const ProjectList = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  const BASE_URL = "https://curicullum.onrender.com/api"
+
   const formatDate = (date) => {
     if (!date || date === "Present") return "Present";
     const d = new Date(date);
@@ -25,7 +27,7 @@ const ProjectList = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get("http://localhost:4050/api/project/list");
+      const res = await axios.get(`${BASE_URL}/project/list`);
       setProjects(res.data.projects || res.data);
     } catch (err) {
       console.error(err);
@@ -41,7 +43,7 @@ const ProjectList = () => {
     if (!window.confirm("Are you sure you want to delete this project?")) return;
     try {
       const res = await axios.delete(
-        `http://localhost:4050/api/project/delete/${id}`
+        `${BASE_URL}/project/delete/${id}`
       );
       setProjects((prev) => prev.filter((p) => p._id !== id));
       setSuccess(res.data.message || "Project deleted successfully.");

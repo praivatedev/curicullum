@@ -4,15 +4,23 @@ const Experience = require('../models/Experience')
 const router = express.Router()
 
 router.post('/add', async (req, res) => {
-    try{
-        const newExperience = await Experience.create(req.body)
+  try {
+    // Copy req.body so we don’t mutate it directly
+    const data = { ...req.body };
 
-        res.status(201).json(newExperience)
-    }catch(error){
-        console.error({error: "Server error", error})
-        res.status(500).json({error: error})
+    // ✅ Default endDate to "Present" if not provided or empty
+    if (!data.endDate || data.endDate.trim() === "") {
+      data.endDate = "Present";
     }
-})
+
+    const newExperience = await Experience.create(data);
+    res.status(201).json(newExperience);
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 router.get('/list', async (req, res) => {
     try {
@@ -41,9 +49,9 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/edit/:id', async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
     try {
-        const updatedExperience = await Experience.findOneByIdAndUpdate({_id: req.params.id}, req.body, { new: true, runValidators: true })
+        const updatedExperience = await Experience.findByIdAndUpdate({_id: req.params.id}, req.body, { new: true, runValidators: true })
 
         if(!updatedExperience){
             return res.status(404).json({Message: "Error finding the experience to update!!"})

@@ -10,8 +10,8 @@ const AddExperience = () => {
   const [location, setLocation] = useState("");
   const [technologies, setTechnologies] = useState([]);
   const [responsibilities, setResponsibilities] = useState([]);
-  const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const [techInput, setTechInput] = useState("");
   const [respInput, setRespInput] = useState("");
@@ -21,6 +21,8 @@ const AddExperience = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const BASE_URL = "https://curicullum.onrender.com/api"
 
   const handleAddItem = (type) => {
     if (type === "tech" && techInput.trim()) {
@@ -44,11 +46,11 @@ const AddExperience = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!company || !position || !location || !startdate) {
+    if (!company || !position || !location || !startDate) {
       return setError("All fields except end date are required!");
     }
 
-    if (startdate && enddate && new Date(startdate) > new Date(enddate)) {
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
       return setError("Start date cannot be after end date!");
     }
 
@@ -58,17 +60,17 @@ const AddExperience = () => {
       location,
       technologies,
       responsibilities,
-      startdate,
-      enddate: enddate === "" ? null : enddate,
+      startDate,
+      endDate: endDate === "" ? null : endDate,
     };
 
     try {
       if (!id) {
-        const res = await axios.post("http://localhost:4050/api/experience/add", finalData);
+        const res = await axios.post(`${BASE_URL}/experience/add`, finalData);
         setSuccess(res.data.message || "Experience added successfully ✅");
         setError("");
       } else {
-        const res = await axios.put(`http://localhost:4050/api/experience/edit/${id}`, finalData);
+        const res = await axios.put(`${BASE_URL}/experience/edit/${id}`, finalData);
         setSuccess(res.data.message || "Experience updated successfully ✅");
         setError("");
       }
@@ -89,8 +91,8 @@ const AddExperience = () => {
       setLocation("");
       setTechnologies([]);
       setResponsibilities([]);
-      setStartdate("");
-      setEnddate("");
+      setStartDate("");
+      setEndDate("");
       setSuccess("");
       setError("");
       console.log("🆕 Creating new experience");
@@ -102,13 +104,24 @@ const AddExperience = () => {
         const res = await axios.get(`http://localhost:4050/api/experience/${id}`);
         const exp = res.data.experience || res.data;
 
+
         setCompany(exp.company || "");
         setPosition(exp.position || "");
         setLocation(exp.location || "");
         setTechnologies(exp.technologies || []);
         setResponsibilities(exp.responsibilities || []);
-        setStartdate(exp.startdate || "");
-        setEnddate(exp.enddate || "");
+        setStartDate(
+          exp.startDate && exp.startDate !== "Present"
+            ? new Date(exp.startDate).toISOString().split("T")[0]
+            : ""
+        );
+
+        // ✅ Prevent "Invalid Date" if backend sends "Present"
+        setEndDate(
+          !exp.endDate || exp.endDate === "Present"
+            ? ""
+            : new Date(exp.endDate).toISOString().split("T")[0]
+        );
         setSuccess("Loaded experience details ✅");
         setError("");
       } catch (err) {
@@ -121,7 +134,8 @@ const AddExperience = () => {
   }, [id]);
 
   return (
-    <div className="relative flex items-center justify-center w-screen h-screen bg-gray-200 overflow-y-auto">
+    <div className="relative flex justify-center w-screen min-h-screen bg-gray-200 overflow-y-auto py-10">
+
       {/* Notifications */}
       <div className="absolute top-5 right-5 z-50">
         <AnimatePresence>
@@ -203,8 +217,8 @@ const AddExperience = () => {
             <label className="font-semibold mb-2">Start Date</label>
             <input
               type="date"
-              value={startdate}
-              onChange={(e) => setStartdate(e.target.value)}
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
               className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -213,8 +227,8 @@ const AddExperience = () => {
             <label className="font-semibold mb-2">End Date</label>
             <input
               type="date"
-              value={enddate}
-              onChange={(e) => setEnddate(e.target.value)}
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
               className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

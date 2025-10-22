@@ -25,6 +25,8 @@ const AddProject = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const BASE_URL = "https://curicullum.onrender.com/api"
+
   // ✅ Add technology or feature
   const handleAddItem = (type) => {
     if (type === "tech" && techInput.trim()) {
@@ -82,10 +84,10 @@ const AddProject = () => {
 
     try {
       if (!id) {
-        const res = await axios.post("http://localhost:4050/api/project/add", projectData);
+        const res = await axios.post(`${BASE_URL}/project/add`, projectData);
         setSuccess(res.data.message || "Project added successfully ✅");
       } else {
-        const res = await axios.put(`http://localhost:4050/api/project/edit/${id}`, projectData);
+        const res = await axios.put(`${BASE_URL}/project/edit/${id}`, projectData);
         setSuccess(res.data.message || "Project updated successfully ✅");
       }
       setError("");
@@ -101,7 +103,7 @@ const AddProject = () => {
     if (!id) return;
     const fetchProject = async () => {
       try {
-        const res = await axios.get(`http://localhost:4050/api/project/${id}`);
+        const res = await axios.get(`${BASE_URL}/project/${id}`);
         const pro = res.data.project || res.data;
         setTitle(pro.title || "");
         setDescription(pro.description || "");
@@ -323,12 +325,11 @@ const AddProject = () => {
 
           {/* Image */}
           <div className="flex flex-col col-span-2">
-            <label className="font-semibold mb-2">Image URL</label>
+            <label className="font-semibold mb-2">Upload Image</label>
             <input
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="Enter image URL"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
               className="border px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500"
             />
           </div>

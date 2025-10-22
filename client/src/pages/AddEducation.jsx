@@ -16,6 +16,8 @@ const AddEducation = () => {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
 
+    const BASE_URL = "https://curicullum.onrender.com/api"
+
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -50,13 +52,13 @@ const AddEducation = () => {
 
         try {
             if (!id) {
-                const res = await axios.post("http://localhost:4050/api/education/add", educationData);
+                const res = await axios.post(`${BASE_URL}/education/add`, educationData);
 
                 console.log(res)
                 setSuccess(res.data.message || "Education added successfully ✅");
                 setError("");
             } else {
-                const res = await axios.put(`http://localhost:4050/api/education/edit/${id}`, educationData);
+                const res = await axios.put(`${BASE_URL}/education/edit/${id}`, educationData);
 
                 console.log(res)
                 setSuccess(res.data.message || "Education edited successfully ✅");
@@ -90,7 +92,7 @@ const AddEducation = () => {
 
         const fetchEducation = async () => {
             try {
-                const res = await axios.get(`http://localhost:4050/api/education/${id}`)
+                const res = await axios.get(`${BASE_URL}/education/${id}`)
 
                 const edu = res.data.education || res.data; // Make sure backend sends education object
 

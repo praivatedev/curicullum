@@ -27,12 +27,12 @@ const experienceSchema = new mongoose.Schema({
         default: []
     },
 
-    startdate: {
+    startDate: {
         type: Date,
         required: true
     },
 
-    enddate: {
+    endDate: {
         type: mongoose.Schema.Types.Mixed,
         required: false
     }
