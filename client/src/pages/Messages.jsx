@@ -9,7 +9,7 @@ const Messages = () => {
   const [error, setError] = useState("");
   const [selectedMessage, setSelectedMessage] = useState(null);
 
-  const BASE_URL = "http://localhost:4050/api";
+  const BASE_URL = "https://curicullum.onrender.com/api"
 
   useEffect(() => {
     fetchMessages();
