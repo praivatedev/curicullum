@@ -101,7 +101,7 @@ const AddExperience = () => {
 
     const fetchExperience = async () => {
       try {
-        const res = await axios.get(`http://localhost:4050/api/experience/${id}`);
+        const res = await axios.get(`http://${BASE_URL}/api/experience/${id}`);
         const exp = res.data.experience || res.data;
         console.log(exp)
 
