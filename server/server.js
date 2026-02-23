@@ -11,7 +11,7 @@ dotenv.config()
 
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://myportfolio-beryl-beta-52.vercel.app"],
   credentials: true
 }));
 
@@ -27,6 +27,11 @@ const runServer = async () => {
 
 runServer()
 
+app.use((req, res, next) => {
+  console.log("🌍 GLOBAL REQUEST:", req.method, req.originalUrl);
+  next();
+});
+
 const educationRoutes = require("./controllers/education")
 const experienceRoutes = require("./controllers/experience")
 const projectRoutes = require("./controllers/project")
@@ -36,6 +41,10 @@ app.use("/api/education", educationRoutes);
 app.use("/api/experience", experienceRoutes);
 app.use("/api/project", projectRoutes)
 app.use("/api/message", messageRoutes)
+
+console.log("✅ Experience routes mounted");
+
+
 
 
 

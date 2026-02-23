@@ -3,6 +3,11 @@ const Experience = require('../models/Experience')
 
 const router = express.Router()
 
+router.use((req, res, next) => {
+  console.log("🔥 EXPERIENCE ROUTE HIT:", req.method, req.originalUrl);
+  next();
+});
+
 router.post('/add', async (req, res) => {
   try {
     // Copy req.body so we don’t mutate it directly
