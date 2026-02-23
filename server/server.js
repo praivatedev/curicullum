@@ -27,11 +27,6 @@ const runServer = async () => {
 
 runServer()
 
-app.use((req, res, next) => {
-  console.log("🌍 GLOBAL REQUEST:", req.method, req.originalUrl);
-  next();
-});
-
 const educationRoutes = require("./controllers/education")
 const experienceRoutes = require("./controllers/experience")
 const projectRoutes = require("./controllers/project")
