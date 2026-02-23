@@ -68,7 +68,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try{
         const deleteExperience = await Experience.findByIdAndDelete(req.params.id)
         
