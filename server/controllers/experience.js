@@ -34,6 +34,21 @@ router.get('/list', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const experience = await Experience.findById(req.params.id)
+
+        if(!experience){
+            return res.status(404).json({message: "Error finding the experience!!"})
+        }
+
+        return res.status(200).json(experience)
+    } catch (error) {
+        console.error({Error: "Server error while finding the experience"})
+        return res.status(500).json(error.message)
+    }
+})
+
 router.put('/edit/:id', async (req, res) => {
     try {
         const updatedExperience = await Experience.findByIdAndUpdate({_id: req.params.id}, req.body, { new: true, runValidators: true })
@@ -49,22 +64,6 @@ router.put('/edit/:id', async (req, res) => {
 
         return res.status(500).json(error.message)
         
-    }
-})
-
-
-router.get('/:id', async (req, res) => {
-    try {
-        const experience = await Experience.findById(req.params.id)
-
-        if(!experience){
-            return res.status(404).json({message: "Error finding the experience!!"})
-        }
-
-        return res.status(200).json(experience)
-    } catch (error) {
-        console.error({Error: "Server error while finding the experience"})
-        return res.status(500).json(error.message)
     }
 })
 
