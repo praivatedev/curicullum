@@ -28,7 +28,7 @@ const ProjectList = () => {
   const fetchProjects = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/project/list`);
-      setProjects(res.data.projects || res.data);
+      setProjects(res.data);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch project data.");

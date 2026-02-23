@@ -103,6 +103,7 @@ const AddExperience = () => {
       try {
         const res = await axios.get(`http://localhost:4050/api/experience/${id}`);
         const exp = res.data.experience || res.data;
+        console.log(exp)
 
 
         setCompany(exp.company || "");
